@@ -1,0 +1,61 @@
+---
+layout: default
+title: Home
+---
+
+		<link rel="stylesheet" href="css/home.css" />
+
+		<!-- Wrapper -->
+			<div id="wrapper" style="background:#000">
+
+				<!-- Main -->
+					<section id="main" style="background:#000">
+						<header>
+							<span class="avatar">{% include drone.html %}</span>
+							<h1 style="color: #c8cccf">[[main.title]]</h1>
+							<p style="color: #c8cccf">[[main.description]]</p>
+						</header>
+						<footer align="center">
+							<ul class="icons">
+								{%for post in site.posts%}
+          						<li>
+            						<a href="{{post.url}}" id="{{post.tag}}" class="fa wow fadeInUp fa-{{post.icon}}" data-wow-delay="0" text="{{post.title}}"></a>
+          						</li>
+          						{%endfor%}
+							</ul>
+							<div style="position:fixed;width:100%" align="center"><h1 style="color: #c8cccf" class="wow fadeInUp" id="append"></h1></div>
+						</footer>
+					</section>
+
+				<!-- Footer -->
+					<footer id="footer">
+						<ul class="copyright">
+							<li>&copy; [[main.author]]</li>
+						</ul>
+					</footer>
+
+			</div>
+
+		<!-- Scripts -->
+			<!--[if lte IE 8]><script src="assets/js/respond.min.js"></script><![endif]-->
+			<script>
+				if ('addEventListener' in window) {
+					window.addEventListener('load', function() { document.body.className = document.body.className.replace(/\bis-loading\b/, ''); });
+					document.body.className += (navigator.userAgent.match(/(MSIE|rv:11\.0)/) ? ' is-ie' : '');
+				}
+				$("#title").append(document.title.substring("{{site.title}}".length+3))
+				var sites = [];
+				$("#append").hide();
+				{%for post in site.posts %}
+					sites.push({title: "{{ post.title }}",url: "{{ post.url | prepend: site.baseurl }}",content: "{{ post.content | strip_newlines | strip_html }}",description: "{{ post.description | strip_newlines | strip_html }}"}); 
+				{%endfor%}
+				$("a").hover(function(){
+					$("#append").removeClass('fadeOutDown')
+					$("#append").addClass('fadeInUp');
+					$("#append").text($(this).attr('text'))
+					$("#append").show();
+				});
+				$("a").mouseout(function(){
+					$("#append").addClass('fadeOutDown')
+				});
+			</script>
